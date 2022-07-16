@@ -1,5 +1,4 @@
-﻿
-# include <Siv3D.hpp>
+﻿# include <Siv3D.hpp>
 
 namespace Config
 {
@@ -33,7 +32,7 @@ void Main()
 	const Texture Horse(Emoji(U"🐎"));
 
 	//回転変数
-	const int rota = 1;
+	int rota = 1;
 
 	Window::SetTitle(U"競馬確認アプリ");
 
@@ -63,7 +62,7 @@ void Main()
 			Line(pos, pos.lerp(center, isHour ? 0.1 : 0.03)).draw(thick / 2, isHour ? Palette::White : Palette::Lightgrey);
 		}
 
-		// 縁の描画
+		//   縁の描画
 		Circle(center, size).drawFrame(thick / 2, Palette::White);
 
 		// 現在時刻を取得
@@ -95,53 +94,41 @@ void Main()
 			ChildProcess{ Config::BrowserPath,U"https://www.jra.go.jp/keiba/calendar/" };
 		}
 
-		//阪神競馬場
-		if (SimpleGUI::Button(U"阪神競馬場", Vec2(500, 100), 200))
+		//競馬場一覧
+		if (SimpleGUI::Button(U"競馬場一覧", Vec2(50, 450), 200))
 		{
 			//Scene::SetBackground(ColorF(0.8, 0.1, 0.1));
-			ChildProcess{ Config::BrowserPath,U"https://www.jra.go.jp/facilities/race/hanshin/" };
-		}
-		
-		//京都競馬場
-		if (SimpleGUI::Button(U"京都競馬場", Vec2(500, 150), 200))
-		{
-			//Scene::SetBackground(ColorF(0.8, 0.1, 0.1));
-			ChildProcess{ Config::BrowserPath,U"https://www.jra.go.jp/facilities/race/kyoto/" };
+			ChildProcess{ Config::BrowserPath,U"https://www.jra.go.jp/facilities/" };
 		}
 
 
-		//中京競馬場
-
-		if (SimpleGUI::Button(U"中京競馬場", Vec2(500, 200), 200))
+		//馬の回転速度
+		if (SimpleGUI::Button(U"↓", Vec2(50, 550), 200))
 		{
-			//Scene::SetBackground(ColorF(0.8, 0.1, 0.1));
-			ChildProcess{ Config::BrowserPath,U"https://www.jra.go.jp/facilities/race/chukyo/" };
-		}
-		
-		//東京競馬場
+			if (rota == 1) {
+				rota = 1;
+			}
+			else {
+				//Scene::SetBackground(ColorF(0.8, 0.1, 0.1));
+				rota = rota - 1;
+			}
 
-		if (SimpleGUI::Button(U"東京競馬場", Vec2(500, 250), 200))
-		{
-			//Scene::SetBackground(ColorF(0.8, 0.1, 0.1));
-			ChildProcess{ Config::BrowserPath,U"https://www.jra.go.jp/facilities/race/tokyo/" };
 		}
 
-		//中山競馬場
-
-		if (SimpleGUI::Button(U"中山競馬場", Vec2(500, 300), 200))
+		if (SimpleGUI::Button(U"↑", Vec2(50, 500), 200))
 		{
-			//Scene::SetBackground(ColorF(0.8, 0.1, 0.1));
-			ChildProcess{ Config::BrowserPath,U"https://www.jra.go.jp/facilities/race/nakayama/" };
+			if (rota == 20) {
+				rota = 20;
+			}
+			else {
+				//Scene::SetBackground(ColorF(0.8, 0.1, 0.1));
+				rota = rota + 1;
+			}
+
 		}
-
-
-
 		//テクスチャの回転
 		//Horse.scaled(1.5).drawAt(550,450);
-		Horse.rotated(Scene::Time() * rota).drawAt(550,450);
+		Horse.rotated(Scene::Time() * rota).drawAt(550,460);
 
 	}
 }
-
-
-
